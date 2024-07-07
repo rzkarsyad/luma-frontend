@@ -1,33 +1,86 @@
+/* globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+html, body, #__next, #root {
+    @apply h-full;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    @apply bg-neutral-900 text-white font-sans;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.chat-container {
+    @apply flex flex-col overflow-hidden box-border;
 }
+
+.chat-bubble {
+    @apply flex mb-5;
+}
+
+.chat-bubble .bubble {
+    @apply leading-6 py-2 px-4 break-words;
+}
+
+.chat-bubble.human .bubble {
+    @apply mr-2 max-w-md bg-neutral-700 rounded-2xl;
+}
+
+.chat-bubble.human {
+    @apply justify-end;
+}
+
+.chat-bubble.ai .bubble {
+    @apply p-0 self-start max-w-xl;
+}
+
+.input-container {
+    @apply flex items-center py-4 bg-neutral-900 box-border;
+}
+
+.input-field {
+    @apply flex-1 py-3 px-4 rounded-full bg-neutral-800 border border-neutral-700 outline-none text-white text-sm mr-2;
+}
+
+.send-button {
+    @apply py-3 px-5 border-none rounded-full bg-white text-sm cursor-pointer;
+}
+
+@media (min-width: 600px) {
+    .chat-container, .input-container {
+        @apply w-11/12;
+    }
+
+    .input-field {
+        @apply max-w-full;
+    }
+}
+
+@media (min-width: 800px) {
+    .chat-container, .input-container {
+        width: 800px;
+    }
+
+    .input-field {
+        @apply max-w-full;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 8px; 
+    background-color: rgba(23, 23, 23, 1); 
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3); 
+    border-radius: 4px; 
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.5); 
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: rgba(23, 23, 23, 1); 
+  }
