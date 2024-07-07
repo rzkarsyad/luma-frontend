@@ -5,14 +5,14 @@ import { useRouter } from 'next/navigation';
 import lumaAILogo from '../../public/luma-ai-logo.svg';
 import cookies from 'js-cookie';
 
-const Navbar = ({ userName }: { userName: string | null }) => {
+const Navbar = () => {
   const router = useRouter();
 
   const handleLogout = async () => {
     await fetch('http://localhost:8080/auth/logout', {
       method: 'POST',
     });
-    cookies.remove('token');
+    cookies.remove('jwt_token');
     cookies.remove('session_id');
     router.push('/');
   };
@@ -23,7 +23,6 @@ const Navbar = ({ userName }: { userName: string | null }) => {
         <Image src={lumaAILogo} alt="Luma AI Logo" className="w-8 h-8 mr-2" />
         <h1 className="text-xl">Luma AI</h1>
       </div>
-      <p className="text-white">{userName}</p>
       <button onClick={handleLogout} className="flex items-center text-neutral-400 hover:text-neutral-100">
         Logout
       </button>
