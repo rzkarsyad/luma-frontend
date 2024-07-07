@@ -9,12 +9,22 @@ const Navbar = () => {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await fetch('http://localhost:8080/auth/logout', {
-      method: 'GET',
-    });
-    cookies.remove('jwt_token');
-    cookies.remove('session_id');
-    router.push('/');
+    try {
+      const response = await fetch('http://localhost:8080/auth/logout', {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        cookies.remove('jwt_token', { path: '/', domain: 'localhost' });
+        cookies.remove('session_id', { path: '/', domain: 'localhost' });
+        router.push('/');
+      } else {
+        console.error('Failed to log out');
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
   };
 
   return (
