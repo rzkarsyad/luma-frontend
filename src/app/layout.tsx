@@ -1,20 +1,24 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Navbar from '../components/Navbar';
 import cookies from 'js-cookie';
 import '../app/globals.css';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname();
+  const router = useRouter();
   const [userName, setUserName] = useState<string | null>(null);
 
   useEffect(() => {
-    const token = cookies.get('token');
-    const sessionId = cookies.get('session_id');
+    const token = cookies.get('jwt_token');
     
-    if (token) {
+    if (!token) {
+      if (pathname !== '/') {
+        router.push('/');
+      }
+    } else {
       fetchUserData(token);
     }
 
@@ -36,7 +40,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         console.error('Error fetching user data:', error);
       }
     }
-  }, []);
+  }, [pathname, router]);
 
   return (
     <html lang="en">
