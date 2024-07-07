@@ -53,14 +53,14 @@ const Chat: React.FC<ChatProps> = ({ token, sessionId }) => {
 
   return (
     <div className="relative w-full h-full flex flex-col justify-between">
-      <div className="chat-container h-full p-4 pb-20 overflow-y-auto">
+      <div className="chat-container h-full self-center p-4 pb-20 overflow-y-auto">
         {messages.map((message, index) => (
           <div key={index} className={`chat-bubble ${message.type}`}>
             <div className="bubble" dangerouslySetInnerHTML={{ __html: message.content }} />
           </div>
         ))}
       </div>
-      <div className="input-container fixed bottom-0 w-full flex items-center justify-center bg-neutral-900 p-4">
+      <div className="input-container fixed bottom-0 w-full flex content-center items-center self-center justify-center bg-neutral-900 p-4">
         <input
           type="text"
           className="input-field flex-1 p-4 rounded-full bg-neutral-800 border border-neutral-700 text-white mr-4 placeholder-neutral-500"

@@ -10,7 +10,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     await fetch('http://localhost:8080/auth/logout', {
-      method: 'POST',
+      method: 'GET',
     });
     cookies.remove('jwt_token');
     cookies.remove('session_id');
