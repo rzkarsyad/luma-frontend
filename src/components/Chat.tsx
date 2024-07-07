@@ -18,11 +18,13 @@ function formatResponse(response: string): string {
 const Chat: React.FC<ChatProps> = ({ token, sessionId }) => {
   const [messages, setMessages] = useState<Array<{ type: string; content: string }>>([]);
   const [input, setInput] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const sendMessage = async () => {
     if (input.trim() === '') return;
     setMessages([...messages, { type: 'human', content: input }]);
     setInput('');
+    setLoading(true);
 
     try {
       const response = await fetch('http://localhost:8080/api/chat', {
@@ -30,6 +32,7 @@ const Chat: React.FC<ChatProps> = ({ token, sessionId }) => {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
+          'session_id': sessionId || '',
         },
         credentials: 'include',
         body: JSON.stringify({ query: input, session_id: sessionId }),
@@ -40,14 +43,20 @@ const Chat: React.FC<ChatProps> = ({ token, sessionId }) => {
       }
 
       const data = await response.json();
-      const responseMessage = formatResponse(data.response);
-      setMessages((prevMessages) => [...prevMessages, { type: 'ai', content: responseMessage }]);
+      const formattedRecommendations = data.recommendations.map((rec: any) => formatResponse(rec.content.parts[0].text));
+
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        ...formattedRecommendations.map((rec: string) => ({ type: 'ai', content: rec }))
+      ]);
     } catch (error) {
       console.error('Error:', error);
       setMessages((prevMessages) => [
         ...prevMessages,
         { type: 'ai', content: 'Something went wrong. Please try again.' },
       ]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -59,6 +68,11 @@ const Chat: React.FC<ChatProps> = ({ token, sessionId }) => {
             <div className="bubble" dangerouslySetInnerHTML={{ __html: message.content }} />
           </div>
         ))}
+        {loading && (
+          <div className="chat-bubble ai">
+            <div className="bubble">Luma is thinking...</div>
+          </div>
+        )}
       </div>
       <div className="input-container fixed bottom-0 w-full flex content-center items-center self-center justify-center bg-neutral-900 p-4">
         <input
