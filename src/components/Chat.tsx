@@ -7,6 +7,8 @@ interface ChatProps {
 }
 
 function formatResponse(response: string): string {
+  response = response.replace(/assistant:/gi, '');
+
   return response
     .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
     .replace(/\* (.*?)(?=\n|\r|$)/g, '• $1')
