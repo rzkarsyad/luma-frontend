@@ -9,7 +9,7 @@ const Login = () => {
       <Image src={lumaAILogo} alt="Luma AI Logo" className="mb-8 w-20 h-20" />
       <h1 className="text-5xl mb-4">Luma AI</h1>
       <p className="w-80 text-center mb-8 text-neutral-400">
-        Your AI assistant to effortlessly manage and optimize your home’s energy
+        Your AI Suggestions to Improve Your Home’s Energy Efficiency
       </p>
       <a
         href="http://localhost:8080/auth/google/login"
