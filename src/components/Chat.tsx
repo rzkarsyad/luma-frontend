@@ -29,7 +29,7 @@ const Chat: React.FC<ChatProps> = ({ token, sessionId }) => {
     setLoading(true);
 
     try {
-      const response = await fetch('https://luma-backend-production.up.railway.app/api/chat/', {
+      const response = await fetch('http://localhost:8080/api/chat/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
