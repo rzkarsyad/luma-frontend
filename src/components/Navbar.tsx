@@ -35,9 +35,9 @@ const Navbar = () => {
       });
 
       if (response.ok) {
-        cookies.remove('jwt_token', { path: '/', domain: 'localhost' });
-        cookies.remove('session_id', { path: '/', domain: 'localhost' });
-        router.push('/');
+        cookies.remove('jwt_token', { path: '/', domain: 'luma-backend-production.up.railway.app' });
+        cookies.remove('session_id', { path: '/', domain: 'luma-backend-production.up.railway.app' });
+        router.replace('/');
       } else {
         console.error('Failed to log out');
       }
