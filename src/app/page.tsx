@@ -12,7 +12,7 @@ const Login = () => {
         Your AI Suggestions to Improve Your Home’s Energy Efficiency
       </p>
       <a
-        href="http://localhost:8080/auth/google/login"
+        href="https://luma-backend-production.up.railway.app/auth/google/login"
         className="inline-flex items-center bg-neutral-200 hover:bg-neutral-300 text-black font-medium py-2 px-4 rounded"
       >
         <Image src={googleLogo} alt="Google Icon" width={20} height={20} className="mr-2" />
