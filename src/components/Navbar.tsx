@@ -1,12 +1,31 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 import lumaAILogo from '../../public/luma-ai-logo.svg';
 import cookies from 'js-cookie';
 
 const Navbar = () => {
   const router = useRouter();
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/auth/userinfo', {
+          withCredentials: true,
+        });
+        if (response.data && response.data.name) {
+          setUserName(response.data.name);
+        }
+      } catch (error) {
+        console.error('Failed to fetch user info:', error);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -33,9 +52,13 @@ const Navbar = () => {
         <Image src={lumaAILogo} alt="Luma AI Logo" className="w-8 h-8 mr-2" />
         <h1 className="text-xl">Luma AI</h1>
       </div>
-      <button onClick={handleLogout} className="flex items-center text-neutral-400 hover:text-neutral-100">
-        Logout
-      </button>
+      <div className="flex items-center">
+        {userName && <span className="text-neutral-400 mr-4">Hi, {userName}</span>}
+        <span className='mr-4 text-neutral-400'>|</span>
+        <button onClick={handleLogout} className="flex items-center text-neutral-400 hover:text-neutral-100">
+          Logout
+        </button>
+      </div>
     </header>
   );
 };
