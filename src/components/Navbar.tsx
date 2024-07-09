@@ -13,7 +13,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await axios.get('https://luma-backend-production.up.railway.app/auth/userinfo', {
+        const response = await axios.get('https://api.luma.my.id/auth/userinfo', {
           withCredentials: true,
         });
         if (response.data && response.data.name) {
@@ -29,7 +29,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('https://luma-backend-production.up.railway.app/auth/logout', {
+      const response = await fetch('https://api.luma.my.id/auth/logout', {
         method: 'GET',
         credentials: 'include',
       });
